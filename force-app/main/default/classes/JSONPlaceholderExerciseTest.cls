@@ -1,5 +1,5 @@
 @IsTest
-public class JSONPlaceholderExerciseTest {
+                                                                                                                public class JSONPlaceholderExerciseTest {
     
     @IsTest
     static void testGetPostById() {
