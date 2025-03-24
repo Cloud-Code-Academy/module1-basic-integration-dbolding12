@@ -1,5 +1,6 @@
 public class JSONPlaceholderExercise {
     private static final String BASE_URL = 'https://jsonplaceholder.typicode.com';
+    private static final String POSTS_ENDPOINT = BASE_URL + '/posts';
     
     /**
      * Exercise 1: Implement a GET request to fetch a post by ID
@@ -7,6 +8,7 @@ public class JSONPlaceholderExercise {
      * @param postId - The ID of the post to fetch
      * @return String - The JSON response from the API
      */
+    
     public static String getPostById(Integer postId) {
         // TODO: Student Implementation
         // 1. Create a new HTTP request
@@ -14,7 +16,27 @@ public class JSONPlaceholderExercise {
         // 3. Set the HTTP method to 'GET'
         // 4. Send the request and get the response
         // 5. Return the response body as string
-        return null;
+        
+        Http http = new Http();
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint(POSTS_ENDPOINT + '/' + postId);
+        request.setMethod('GET');
+        
+        try {
+            HttpResponse response = http.send(request);
+
+            if(response.getStatusCode() >= 200 && response.getStatusCode() < 300) {                
+                System.debug((String)response.getBody()); 
+                return (String)response.getBody();
+                
+            } else {
+                System.debug('Status Code: ' + response.getStatusCode());
+                return null;
+            }                        
+        } catch (Exception e) {
+            System.debug('Error Message: ' + e.getMessage());
+            return null;
+        }     
     }
     
     /**
@@ -33,8 +55,35 @@ public class JSONPlaceholderExercise {
         // 4. Create a JSON string with the post data
         // 5. Set the request body
         // 6. Send the request and get the response
-        // 7. Return the response body as string
-        return null;
+        // 7. Return the response body as string        
+        Http http = new Http();
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint(POSTS_ENDPOINT);
+        request.setMethod('POST');
+        request.setHeader('Content-Type', 'application/json');
+
+        String apiBody = JSON.serialize(new Map<String, Object>{
+            'title' => title,
+            'body' => body,
+            'userId' => userId
+        });
+        request.setBody(apiBody);
+        
+        try {
+            HttpResponse response = http.send(request);
+
+            if(response.getStatusCode() >= 200 && response.getStatusCode() < 300) {                
+                System.debug((String)response.getBody()); 
+                return (String)response.getBody();
+                
+            } else {
+                System.debug('Status Code: ' + response.getStatusCode());
+                return null;
+            }                        
+        } catch (Exception e) {
+            System.debug('Error Message: ' + e.getMessage());
+            return null;
+        }  
     }
     
     /**
@@ -55,7 +104,35 @@ public class JSONPlaceholderExercise {
         // 5. Set the request body
         // 6. Send the request and get the response
         // 7. Return the response body as string
-        return null;
+        
+        Http http = new Http();
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint(POSTS_ENDPOINT + '/' + postId);
+        request.setMethod('PUT');
+        request.setHeader('Content-Type', 'application/json');
+
+        String apiBody = JSON.serialize(new Map<String, Object>{
+            'title' => title,
+            'body' => body,
+            'userId' => userId
+        });
+        request.setBody(apiBody);
+        
+        try {
+            HttpResponse response = http.send(request);
+
+            if(response.getStatusCode() >= 200 && response.getStatusCode() < 300) {                
+                System.debug((String)response.getBody()); 
+                return (String)response.getBody();
+                
+            } else {
+                System.debug('Status Code: ' + response.getStatusCode());
+                return null;
+            }                        
+        } catch (Exception e) {
+            System.debug('Error Message: ' + e.getMessage());
+            return null;
+        }  
     }
     
     /**
@@ -74,7 +151,38 @@ public class JSONPlaceholderExercise {
         // 5. Set the request body
         // 6. Send the request and get the response
         // 7. Return the response body as string
-        return null;
+        
+        Http http = new Http();
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint(POSTS_ENDPOINT + '/' + postId);
+        request.setMethod('PATCH');
+        // Only set the Content-Type if we are sending a body
+        // (in case title is null, we don't want to send an empty body)
+        if (title != null) {
+            request.setHeader('Content-Type', 'application/json');
+
+            String apiBody = JSON.serialize(new Map<String, Object>{
+            'title' => title
+            });
+            // Only set the body if title is not null
+            request.setBody(apiBody);
+        }
+        
+        try {
+            HttpResponse response = http.send(request);
+
+            if(response.getStatusCode() >= 200 && response.getStatusCode() < 300) {                
+                System.debug((String)response.getBody()); 
+                return (String)response.getBody();
+                
+            } else {
+                System.debug('Status Code: ' + response.getStatusCode());
+                return null;
+            }                        
+        } catch (Exception e) {
+            System.debug('Error Message: ' + e.getMessage());
+            return null;
+        }  
     }
     
     /**
@@ -90,6 +198,25 @@ public class JSONPlaceholderExercise {
         // 3. Set the HTTP method to 'DELETE'
         // 4. Send the request and get the response
         // 5. Return the response status code
-        return null;
+        Http http = new Http();
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint(POSTS_ENDPOINT + '/' + postId);
+        request.setMethod('DELETE');
+        
+        try {
+            HttpResponse response = http.send(request);
+
+            if(response.getStatusCode() >= 200 && response.getStatusCode() < 300) {                
+                System.debug('The process was successful and Status Code: ' + response.getStatusCode()); 
+                return response.getStatusCode();
+                
+            } else {
+                System.debug('Status Code: ' + response.getStatusCode());
+                return response.getStatusCode();
+            }                        
+        } catch (Exception e) {
+            System.debug('Error Message: ' + e.getMessage());
+            return null;
+        }      
     }
 } 
